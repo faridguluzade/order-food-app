@@ -4,9 +4,9 @@ import { CartContext } from "../../context/cart-context";
 import classes from "./Modal.module.css";
 
 const Backdrop = () => {
-  const { hideCartHandler } = useContext(CartContext);
+  const { setIsCartOpen } = useContext(CartContext);
 
-  return <div className={classes.backdrop} onClick={hideCartHandler} />;
+  return <div className={classes.backdrop} onClick={setIsCartOpen} />;
 };
 
 const ModalOverlay = ({ children }) => {

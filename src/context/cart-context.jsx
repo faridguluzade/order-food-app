@@ -8,6 +8,7 @@ export const CartContext = createContext({
   totalAmount: 0,
   addItem: () => {},
   removeItem: () => {},
+  clearCart: () => {},
   isCartOpen: false,
 });
 
@@ -70,8 +71,11 @@ const cartReducer = (state, action) => {
         isCartOpen: action.bool,
       };
     }
+    case "CLEAR": {
+      return { ...INITIAL_STATE, isCartOpen: state.isCartOpen };
+    }
     default: {
-      return state;
+      return INITIAL_STATE;
     }
   }
 };
@@ -86,11 +90,16 @@ export const CartProvider = ({ children }) => {
     dispatch({ type: "ADD_ITEM", item: item });
   };
 
-  const setIsCartOpen = () => {
-    dispatch({ type: "IS_CART_OPEN", bool: !isCartOpen });
-  };
   const removeItemFromCartHandler = (id) => {
     dispatch({ type: "REMOVE", id: id });
+  };
+
+  const clearCartHandler = () => {
+    dispatch({ type: "CLEAR" });
+  };
+
+  const setIsCartOpen = () => {
+    dispatch({ type: "IS_CART_OPEN", bool: !isCartOpen });
   };
 
   const value = {
@@ -98,6 +107,7 @@ export const CartProvider = ({ children }) => {
     totalAmount,
     addItem: addItemToCartHandler,
     removeItem: removeItemFromCartHandler,
+    clearCart: clearCartHandler,
     setIsCartOpen,
     isCartOpen,
   };
